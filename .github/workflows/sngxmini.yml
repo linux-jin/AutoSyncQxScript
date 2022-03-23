@@ -12,7 +12,6 @@ jobs:
     env:
       PAT: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - uses: actions/checkout@v2
         with:
@@ -23,6 +22,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/sngxmini/QuanX.git"
-          source_branch: "master"
+          source_branch: "main"
           destination_branch: "sngxmini"
           github_token: ${{ secrets.PAT }}
