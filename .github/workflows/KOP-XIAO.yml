@@ -23,6 +23,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/KOP-XIAO/QuantumultX.git"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "KOP-XIAO"
           github_token: ${{ secrets.PAT }}
