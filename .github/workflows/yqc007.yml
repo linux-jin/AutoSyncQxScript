@@ -22,6 +22,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/yqc007/QuantumultX.git"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "yqc007"
           github_token: ${{ secrets.PAT }}
