@@ -1,4 +1,4 @@
-name: DivineEngine-sync
+name: yichahucha-sync
 on:
   schedule:
     - cron: '1 */3 * * *'
@@ -6,23 +6,22 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: sync-DivineEngine-GithubSync
+    types: sync-yichahucha-GithubSync
 jobs:
   repo-sync:
     env:
       PAT: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: sync DivineEngine-GithubSync
+      - name: sync yichahucha-GithubSync
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/DivineEngine/Profiles.git"
+          source_repo: "https://github.com/yichahucha/surge.git"
           source_branch: "master"
-          destination_branch: "DivineEngine"
+          destination_branch: "yichahucha"
           github_token: ${{ secrets.PAT }}

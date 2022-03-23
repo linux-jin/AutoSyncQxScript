@@ -1,4 +1,4 @@
-name: DivineEngine-sync
+name: I-am-R-E-sync
 on:
   schedule:
     - cron: '1 */3 * * *'
@@ -6,23 +6,22 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: sync-DivineEngine-GithubSync
+    types: sync-I-am-R-E-GithubSync
 jobs:
   repo-sync:
     env:
       PAT: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: sync DivineEngine-GithubSync
+      - name: sync I-am-R-E-GithubSync
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/DivineEngine/Profiles.git"
-          source_branch: "master"
-          destination_branch: "DivineEngine"
+          source_repo: "https://github.com/I-am-R-E/QuantumultX.git"
+          source_branch: "main"
+          destination_branch: "I-am-R-E"
           github_token: ${{ secrets.PAT }}
