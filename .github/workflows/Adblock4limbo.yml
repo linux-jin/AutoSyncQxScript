@@ -22,6 +22,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/limbopro/Adblock4limbo.git"
-          source_branch: "master"
+          source_branch: "main"
           destination_branch: "Adblock4limbo"
           github_token: ${{ secrets.PAT }}
