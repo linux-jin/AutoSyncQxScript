@@ -1,7 +1,7 @@
 name: yu-steven-sync
 on:
   schedule:
-    - cron: '1 */30 * * *'
+    - cron: '00 43 */13 * *'
   workflow_dispatch:
   watch:
     types: started
