@@ -1,7 +1,7 @@
 name: I-am-R-E-function-sync
 on:
   schedule:
-    - cron: '00 35 */13 * *'
+    - cron: '20 12/12 * * *'
   workflow_dispatch:
   watch:
     types: started

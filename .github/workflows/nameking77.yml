@@ -1,7 +1,7 @@
 name: nameking77-sync
 on:
   schedule:
-    - cron: '00 44 */14 * *'
+    - cron: '20 22/12 * * *'
   workflow_dispatch:
   watch:
     types: started

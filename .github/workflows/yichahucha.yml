@@ -1,7 +1,7 @@
 name: yichahucha-sync
 on:
   schedule:
-    - cron: '00 40 */13 * *'
+    - cron: '25 11/12 * * *'
   workflow_dispatch:
   watch:
     types: started

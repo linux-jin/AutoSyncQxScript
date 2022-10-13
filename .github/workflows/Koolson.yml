@@ -1,7 +1,7 @@
 name: Koolson-sync
 on:
   schedule:
-    - cron: '00 12 */13 * *'
+    - cron: '20 17/12 * * *'
   workflow_dispatch:
   watch:
     types: started

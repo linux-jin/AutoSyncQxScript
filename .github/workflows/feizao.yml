@@ -1,7 +1,7 @@
 name: feizao-sync
 on:
   schedule:
-    - cron: '00 33 */13 * *'
+    - cron: '20 10/12 * * *'
   workflow_dispatch:
   watch:
     types: started

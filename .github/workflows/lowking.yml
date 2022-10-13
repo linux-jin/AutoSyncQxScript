@@ -1,7 +1,7 @@
 name: lowking-sync
 on:
   schedule:
-    - cron: '00 16 */13 * *'
+    - cron: '20 19/12 * * *'
   workflow_dispatch:
   watch:
     types: started

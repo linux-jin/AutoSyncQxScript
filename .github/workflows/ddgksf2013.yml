@@ -1,7 +1,7 @@
 name: ddgksf2013-sync
 on:
   schedule:
-    - cron: '00 59 */13 * *'
+    - cron: '20 7/12 * * *'
   workflow_dispatch:
   watch:
     types: started

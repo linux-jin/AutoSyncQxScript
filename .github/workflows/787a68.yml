@@ -1,7 +1,7 @@
 name: 787a68-sync
 on:
   schedule:
-    - cron: '00 10 */13 * *'
+    - cron: '20 1/12 * * *'
   workflow_dispatch:
   watch:
     types: started

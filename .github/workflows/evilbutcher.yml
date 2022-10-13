@@ -1,7 +1,7 @@
 name: evilbutcher-sync
 on:
   schedule:
-    - cron: '00 45 */13 * *'
+    - cron: '20 9/12 * * *'
   workflow_dispatch:
   watch:
     types: started

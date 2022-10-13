@@ -1,7 +1,7 @@
 name: DivineEngine-sync
 on:
   schedule:
-    - cron: '00 41 */13 * *'
+    - cron: '20 8/12 * * *'
   workflow_dispatch:
   watch:
     types: started
