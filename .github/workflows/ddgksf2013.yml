@@ -1,4 +1,4 @@
-name: ddgksf2013-sync
+name: ddgksf2013-Rewrite-sync
 on:
   schedule:
     - cron: '20 7/12 * * *'
@@ -6,7 +6,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: sync-ddgksf2013-GithubSync
+    types: sync-ddgksf2013-GithubRewriteSync
 jobs:
   repo-sync:
     env:
@@ -18,11 +18,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync ddgksf2013-GithubSync
+      - name: sync ddgksf2013-GithubRewriteSync
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/ddgksf2013/Cuttlefish.git"
+          source_repo: "https://github.com/ddgksf2013/Rewrite.git"
           source_branch: "master"
           destination_branch: "ddgksf2013"
           github_token: ${{ secrets.PAT }}
