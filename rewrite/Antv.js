@@ -5,7 +5,9 @@
 脚本功能：Antv解锁
 脚本作者：King
 网站地址：https://is.gd/10Yf0H
-更新时间：2023.6.16
+更新时间：
+2023.11.16
+2023.6.16
 2022.12.6
 2022.10.31
 脚本发布：https://t.me/yqc_123
@@ -15,7 +17,7 @@
 ********************************
 [rewrite_local]
 #antv
-^http[s]?:\/\/.+antv(app|h5).+\/api\/videos\/.*$ url script-request-header https://raw.githubusercontent.com/nameking77/Qx/main/rewrite/Antv.js
+^http[s]?:\/\/.+(tvtm88|yunpo).+\/videos\/.*$ url script-request-header https://raw.githubusercontent.com/nameking77/Qx/main/rewrite/Antv.js
 
 
 [mitm] 
