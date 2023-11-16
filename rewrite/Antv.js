@@ -21,7 +21,7 @@
 
 
 [mitm] 
-hostname = *.antvapp.com,*.antvh5.com,
+hostname = api22.yunpo.shop
 *
 *
 */
