@@ -27,4 +27,4 @@ jobs:
                   git commit --allow-empty -m "Auto amazing commit"
             - name: Finilly pushing the repo
               run: |
-                  git push origin master
+                  git push origin main
