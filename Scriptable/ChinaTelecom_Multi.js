@@ -1,13 +1,16 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-green; icon-glyph: phone-square;
+// Variables used by Scriptable.
+// These must be at the very top of the file. Do not edit.
+// icon-color: deep-green; icon-glyph: phone-square;
 /*
  * @author: 2Ya&脑瓜 (原UI作者)
  * @integration: (RSA登录 + 电信官方API)
  * @feedback https://t.me/Scriptable_CN
  * version: 3.0.0-rsa
- * update: 2026-07-29
- * 说明：使用 Scripting 版本的登录逻辑（RSA加密+电信官方API），保留完整UI
+ * update: 2026-08-02
+ * 说明：使用 Scripting 版本的登录逻辑（RSA加密+电信官方API，支持多账户）
  * 
  * 📱 Device ID 参数说明：
  * Device ID 用于解决部分用户登录失败的问题
@@ -35,7 +38,7 @@ class Widget extends DmYY {
     this.Run();
   }
 
-  version = '3.0.0-rsa';
+  version = '3.1.0-multi';
 
   gradient = false;
 
@@ -56,6 +59,7 @@ class Widget extends DmYY {
   canvRadius = 80;
 
   widgetStyle = '1';
+  currIndex = '1';
 
   format = (str) => {
     return parseInt(str) >= 10 ? str : `0${str}`;
@@ -199,9 +203,18 @@ class Widget extends DmYY {
         flowIconColor,
         voiceIconColor,
         gradient,
-        widgetStyle,
         builtInColor,
+        previewAccount
       } = this.settings;
+
+      // 多账户支持：读取小组件参数
+      let param = args.widgetParameter ? args.widgetParameter.toString() : (previewAccount || '1');
+      if (!['1','2','3','4','5'].includes(param)) param = '1';
+      
+      this.currIndex = param;
+      
+      // 读取当前账户的配置
+      this.widgetStyle = this.settings[`widgetStyle${param}`] || '1';
 
       this.gradient = gradient === 'true';
 
@@ -223,7 +236,6 @@ class Widget extends DmYY {
       this.flow.FGColor = new Color(this.flowColorHex);
       this.voice.FGColor = new Color(this.voiceColorHex);
 
-      this.widgetStyle = widgetStyle || this.widgetStyle;
 
       const sizeSettings = [
         'ringStackSize',
@@ -266,9 +278,12 @@ class Widget extends DmYY {
       console.error(e);
     }
 
-    if (!this.settings.telecom_phone || !this.settings.telecom_password) {
+    // 多账户检查：检查当前账户的配置
+    const phoneKey = `telecom_phone${this.currIndex}`;
+    const passwordKey = `telecom_password${this.currIndex}`;
+    if (!this.settings[phoneKey] || !this.settings[passwordKey]) {
       if (config.runsInApp) {
-        return this.notify(this.name, "请先在设置中填写手机号和服务密码");
+        return this.notify(this.name, `请先为账户${this.currIndex}填写手机号和服务密码`);
       }
       return;
     }
@@ -328,9 +343,10 @@ class Widget extends DmYY {
  }
 
  async telecomLogin() {
- const phonenum = this.settings.telecom_phone;
- const password = this.settings.telecom_password;
- const deviceid = this.settings.telecom_deviceid || "";
+ const param = this.currIndex;
+ const phonenum = this.settings[`telecom_phone${param}`];
+ const password = this.settings[`telecom_password${param}`];
+ const deviceid = this.settings[`telecom_deviceid${param}`] || "";
  const uuid = String(Math.floor(Math.random() * 9e15 + 1e15));
  const ts = this.getBeijingTimestamp();
  console.log("🔐 正在生成 RSA 签名...");
@@ -346,19 +362,20 @@ class Widget extends DmYY {
  const loginData = JSON.parse(loginResp);
  if (loginData.responseData?.resultCode !== "0000") throw new Error(loginData.responseData?.resultDesc || "登录失败");
  const {token,cityCode,provinceCode} = loginData.responseData.data.loginSuccessResult;
- this.settings.telecom_token = token;
- this.settings.telecom_cityCode = cityCode;
- this.settings.telecom_provinceCode = provinceCode;
+ this.settings[`telecom_token${param}`] = token;
+ this.settings[`telecom_cityCode${param}`] = cityCode;
+ this.settings[`telecom_provinceCode${param}`] = provinceCode;
  this.saveSettings(false);
  console.log(`✅ 登录成功 | 省:${provinceCode} 市:${cityCode}`);
  return {token,cityCode,provinceCode};
  }
 
  async fetchImportantData() {
- const phonenum = this.settings.telecom_phone;
- const token = this.settings.telecom_token || "";
- const cityCode = this.settings.telecom_cityCode || "";
- const provinceCode = this.settings.telecom_provinceCode || "";
+ const param = this.currIndex;
+ const phonenum = this.settings[`telecom_phone${param}`];
+ const token = this.settings[`telecom_token${param}`] || "";
+ const cityCode = this.settings[`telecom_cityCode${param}`] || "";
+ const provinceCode = this.settings[`telecom_provinceCode${param}`] || "";
  const ts = this.getBeijingTimestamp();
  const dataBody = {content:{fieldData:{provinceCode,cityCode,shopId:"20002",isChinatelecom:"0",account:this.transNumber(phonenum)},attach:"test"},headerInfos:{code:"qryImportantData",clientType:"#12.2.0#channel50#iPhone 14 Pro#",timestamp:ts,shopId:"20002",source:"110003",sourcePassword:"Sid98s",userLoginName:this.transNumber(phonenum),token}};
  const req = new Request("https://appfuwu.189.cn:9021/query/qryImportantData");
@@ -372,20 +389,54 @@ class Widget extends DmYY {
 
  // ==================== getData 方法（电信官方API） ====================
  getData = async () => {
- if (!this.settings.telecom_phone || !this.settings.telecom_password) {
- if (config.runsInApp) return this.notify(this.name, "请先在设置中填写手机号和服务密码");
- return;
- }
- const t0 = Date.now();
- console.log(`🚀 电信组件启动 (RSA登录) | 手机号: ${this.settings.telecom_phone.slice(-4)}`);
- const cached = this.settings.dataSource;
- const cacheAge = cached?._timestamp ? Date.now() - cached._timestamp : null;
- const CACHE_TTL = 30 * 60 * 1000;
- if (cached && cacheAge && cacheAge < CACHE_TTL) {
- console.log(`🧠 使用缓存数据 | 缓存时间: ${Math.round(cacheAge / 60000)} 分钟前`);
- console.log(`✅ 渲染完成 | 来源: 缓存 | 耗时: ${Date.now() - t0}ms`);
- return;
- }
+   const param = this.currIndex;
+   const phoneKey = `telecom_phone${param}`;
+   const passwordKey = `telecom_password${param}`;
+   
+   if (!this.settings[phoneKey] || !this.settings[passwordKey]) {
+     console.log(`❌ 账户[${param}] 未配置手机号或密码`);
+     if (config.runsInApp) return this.notify(this.name, `请先为账户${param}填写手机号和服务密码`);
+     return;
+   }
+
+   const fm = FileManager.local();
+   const cacheDir = fm.joinPath(fm.documentsDirectory(), "ChinaTelecom_Cache");
+   const cachePath = fm.joinPath(cacheDir, `account_${param}.json`);
+   
+   if (!fm.fileExists(cacheDir)) fm.createDirectory(cacheDir, true);
+
+   const t0 = Date.now();
+   console.log(`🚀 电信组件启动 (RSA登录) | 账户${param} | 手机号: ${this.settings[phoneKey].slice(-4)}`);
+   
+   let cached = null;
+   let cacheAge = null;
+   const CACHE_TTL = 30 * 60 * 1000;
+   
+   if (fm.fileExists(cachePath)) {
+     const modified = fm.modificationDate(cachePath);
+     cacheAge = Date.now() - modified.getTime();
+     
+     if (cacheAge < CACHE_TTL) {
+       console.log(`🧠 使用缓存数据 | 缓存时间: ${Math.round(cacheAge / 60000)} 分钟前`);
+       try {
+         cached = JSON.parse(fm.readString(cachePath));
+         Object.keys(cached).forEach((key) => {
+           if (this[key] && typeof cached[key] === "object") {
+             Object.assign(this[key], cached[key]);
+           }
+         });
+         if (cached.updateTime) {
+           this.arrUpdateTime = cached.updateTime.split(':');
+         }
+         console.log(`✅ 渲染完成 | 来源: 缓存 | 耗时: ${Date.now() - t0}ms`);
+         return;
+       } catch (e) {
+         console.log(`⚠️ 缓存损坏，刷新数据`);
+       }
+     } else {
+       console.log(`🔵 缓存已过期 (${Math.round(cacheAge / 60000)} > 30分)`);
+     }
+   }
  try {
  let dataResp;
  try {
@@ -444,6 +495,7 @@ class Widget extends DmYY {
    console.log(`📊 显示模式：剩余流量 ${this.flow.number} ${this.flow.unit}`);
  }
  this.flow.en = this.flow.unit;
+ console.log("📞 语音原始数据:", JSON.stringify(apiData.voiceInfo?.voiceDataInfo || {}, null, 2));
  const voiceTotal = this._safeN(apiData.voiceInfo?.voiceDataInfo?.total || apiData.totalVoice);
  const voiceUsed = this._safeN(apiData.voiceInfo?.voiceDataInfo?.used || apiData.usedVoice);
  const voiceBalance = this._safeN(apiData.voiceInfo?.voiceDataInfo?.balance || (voiceTotal - voiceUsed));
@@ -451,6 +503,7 @@ class Widget extends DmYY {
  // 根据"显示已用"设置，语音也要同步显示已用或剩余
  if (this.settings.showUsedFlow === "true") {
    // 显示已用
+   this.voice.title = "已用语音";
    this.voice.number = voiceUsed.toString();
    if (voiceTotal > 0) {
      this.voice.percent = ((voiceUsed / voiceTotal) * 100).toFixed(2);
@@ -460,6 +513,7 @@ class Widget extends DmYY {
    console.log(`📞 语音（已用）: ${voiceUsed} 分钟, 百分比: ${this.voice.percent}%`);
  } else {
    // 显示剩余
+   this.voice.title = "剩余语音";
    this.voice.number = voiceBalance.toString();
    if (voiceTotal > 0) {
      this.voice.percent = ((voiceBalance / voiceTotal) * 100).toFixed(2);
@@ -470,19 +524,34 @@ class Widget extends DmYY {
  }
  const d = new Date();
  this.arrUpdateTime = [d.getMonth()+1,d.getDate(),d.getHours(),d.getMinutes()].map((n)=>n.toString().padStart(2,"0"));
- this.settings.dataSource = {fee:{number:this.fee.number},voice:{number:this.voice.number,percent:this.voice.percent},flow:{en:this.flow.en,number:this.flow.number,unit:this.flow.unit,percent:this.flow.percent,title:this.flow.title},updateTime:this.arrUpdateTime.join(":"),_timestamp:Date.now()};
- this.saveSettings(false);
+ // 保存到独立缓存文件
+ const cacheData = {fee:{number:this.fee.number},voice:{number:this.voice.number,percent:this.voice.percent},flow:{en:this.flow.en,number:this.flow.number,unit:this.flow.unit,percent:this.flow.percent,title:this.flow.title},updateTime:this.arrUpdateTime.join(":"),_timestamp:Date.now()};
+ if (fm.fileExists(cachePath)) fm.remove(cachePath);
+ fm.writeString(cachePath, JSON.stringify(cacheData));
+ 
  console.log(`✅ 渲染完成 | 来源: 电信官方API | 耗时: ${Date.now()-t0}ms | 话费: ${this.fee.number}元 流量: ${this.flow.number}${this.flow.unit} 语音: ${this.voice.number}分钟`);
  } catch (e) {
- let errorMessage = e.message || "未知错误";
- console.error(`⛔️ 电信渲染异常: ${errorMessage}`);
- if (this.settings.dataSource) {
- console.warn("⚠️ 使用过期缓存兜底");
- this.arrUpdateTime = this.settings.dataSource.updateTime ? this.settings.dataSource.updateTime.split(':') : ["--","--","--","--"];
- if (config.runsInApp) this.notify(this.name, "网络连接失败，当前显示缓存数据");
- } else {
- if (config.runsInApp) this.notify(this.name, `获取失败: ${errorMessage}`);
- }
+   let errorMessage = e.message || "未知错误";
+   console.error(`⛔️ 电信渲染异常: ${errorMessage}`);
+   if (fm.fileExists(cachePath)) {
+     console.warn("⚠️ 使用过期缓存兜底");
+     try {
+       const oldCache = JSON.parse(fm.readString(cachePath));
+       Object.keys(oldCache).forEach((key) => {
+         if (this[key] && typeof oldCache[key] === "object") {
+           Object.assign(this[key], oldCache[key]);
+         }
+       });
+       if (oldCache.updateTime) {
+         this.arrUpdateTime = oldCache.updateTime.split(':');
+       }
+     } catch (e2) {
+       console.error("缓存读取失败");
+     }
+     if (config.runsInApp) this.notify(this.name, "网络连接失败，当前显示缓存数据");
+   } else {
+     if (config.runsInApp) this.notify(this.name, `获取失败: ${errorMessage}`);
+   }
  }
  };
  // ==================== UI 渲染函数（完整保留） ====================
@@ -1275,25 +1344,109 @@ class Widget extends DmYY {
   }
 
   async checkAndUpdateScript() {
-    const updateUrl = "https://raw.githubusercontent.com/anker1209/Scriptable/main/upcoming.json";
+    const remoteScriptUrl = "https://raw.githubusercontent.com/githubdulong/Script/master/Scriptable/ChinaTelecom_Multi.js";
     const scriptName = Script.name() + '.js'
 
-    const request = new Request(updateUrl);
+    console.log("正在检查更新...")
+
     try {
-      const response = await request.loadJSON();
-      const latestVersion = response.find(i => i.name === "ChinaTelecom_2024").version;
-      const downloadUrl = response.find(i => i.name === "ChinaTelecom_2024").downloadUrl;
+      const request = new Request(remoteScriptUrl);
+      const newScriptContent = await request.loadString();
+
+      let versionPattern = /version\s*=\s*['"]([^'"]+)['"]/ ;
+      let match = newScriptContent.match(versionPattern);
+
+      if (!match) {
+        console.log("未在远程代码中找到版本号");
+        const alert = new Alert();
+        alert.title = "检查失败";
+        alert.message = "远程脚本格式可能不正确，未找到版本号。";
+        alert.addAction("确定");
+        await alert.present();
+        return;
+      }
+
+      const latestVersion = match[1];
       const isUpdateAvailable = this.version !== latestVersion;
 
       if (isUpdateAvailable) {
-        console.log("检测到官方有新版本，但为了保留手机号登录功能，建议谨慎更新。");
+        const alert = new Alert();
+        alert.title = "检测到新版本";
+        alert.message = `当前版本：${this.version}\n新版本：${latestVersion}\n是否更新？`;
+        alert.addAction("更新");
+        alert.addCancelAction("取消");
+
+        const response = await alert.presentAlert();
+        if (response === 0) {
+          const fm = FileManager[
+            module.filename.includes('Documents/iCloud~') ? 'iCloud' : 'local'
+          ]();
+          const scriptPath = fm.documentsDirectory() + `/${scriptName}`;
+          fm.writeString(scriptPath, newScriptContent);
+
+          const successAlert = new Alert();
+          successAlert.title = "更新成功";
+          successAlert.message = "脚本已更新，请关闭本脚本后重新打开!";
+          successAlert.addAction("确定");
+          await successAlert.present();
+          // this.reopenScript();
+        }
+      } else {
+        const noUpdateAlert = new Alert();
+        noUpdateAlert.title = "无需更新";
+        noUpdateAlert.message = "当前已是最新版本。";
+        noUpdateAlert.addAction("确定");
+        await noUpdateAlert.present();
       }
     } catch (e) {
-      console.log("检查更新失败");
+      console.error(e);
+      const alert = new Alert();
+      alert.title = "更新出错";
+      alert.message = "网络请求失败或地址错误：" + e.message;
+      alert.addAction("确定");
+      await alert.present();
     }
   }
 
-  setAccountConfig = async () => {
+  getAccountMenu(index) {
+   return [
+     {
+       menu: [
+         {
+           url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/basic.png',
+           type: 'input',
+           title: `账户 ${index} 手机号`,
+           desc: '请输入中国电信手机号',
+           val: `telecom_phone${index}`,
+         },
+         {
+           url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/login.png',
+           type: 'input',
+           title: `账户 ${index} 服务密码`,
+           desc: '请输入服务密码(6位数字)',
+           val: `telecom_password${index}`,
+         },
+         {
+           url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/basic.png',
+           type: 'input',
+           title: `账户 ${index} 设备ID（可选）`,
+           desc: '留空则自动生成随机设备ID',
+           val: `telecom_deviceid${index}`,
+         },
+         {
+           url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/widgetStyle.png',
+           type: 'select',
+           title: `账户 ${index} 组件样式`,
+           options: ['1', '2', '3', '4', '5', '6'],
+           val: `widgetStyle${index}`,
+           desc: '默认使用样式1'
+         },
+       ]
+     }
+   ];
+ }
+
+ setAccountConfig = async () => {
     return this.renderAppView([
       {
         title: '电信账号设置',
@@ -1592,6 +1745,42 @@ class Widget extends DmYY {
 
   Run() {
     if (config.runsInApp) {
+      let accountMenus = [];
+      for (let i = 1; i <= 5; i++) {
+        accountMenus = accountMenus.concat(this.getAccountMenu(i));
+      }
+      
+      if (accountMenus.length > 0) {
+        accountMenus[0].title = '账户设置';
+      }
+      
+      accountMenus.push({
+        title: '重置账户',
+        menu: [{
+          url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/clear.png',
+          title: '重置账户',
+          desc: '清空所有账户设置与缓存',
+          name: 'reset',
+          val: 'reset',
+          onClick: () => {
+            for (let i = 1; i <= 5; i++) {
+              delete this.settings[`telecom_phone${i}`];
+              delete this.settings[`telecom_password${i}`];
+              delete this.settings[`telecom_deviceid${i}`];
+              delete this.settings[`widgetStyle${i}`];
+              delete this.settings[`telecom_token${i}`];
+              delete this.settings[`telecom_cityCode${i}`];
+              delete this.settings[`telecom_provinceCode${i}`];
+            }
+            const fm = FileManager.local();
+            const cacheDir = fm.joinPath(fm.documentsDirectory(), "ChinaTelecom_Cache");
+            if (fm.fileExists(cacheDir)) fm.remove(cacheDir);
+            this.saveSettings();
+            this.reopenScript();
+          }
+        }]
+      });
+
       this.registerAction({
         title: '组件配置',
         menu: [
@@ -1605,29 +1794,50 @@ class Widget extends DmYY {
             },
           },
           {
-            url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/widgetStyle.png',
+            icon: { name: 'lineweight', color: '#a0d911' },
             type: 'select',
-            title: '组件样式',
-            options: ['1', '2', '3', '4', '5', '6'],
-            val: 'widgetStyle',
-          },
+            title: '账户预览',
+            options: ['1', '2', '3', '4', '5'],
+            val: 'previewAccount',
+            desc: '仅在 App 内运行脚本时生效'
+          }
         ],
       });
       this.registerAction({
-        title: '流量设置',
+        title: '',
         menu: [
           {
             url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/filterOrientateFlow.png',
             type: 'switch',
             title: '过滤定向',
             val: 'filterOrientateFlow',
-            desc: '此模式下该选项可能无效', // 提示用户
+            desc: '切换后自动刷新数据',
+            onChange: async () => {
+              delete this.settings.dataSource;
+              delete this.settings.telecom_token;
+              delete this.settings.telecom_cityCode;
+              delete this.settings.telecom_provinceCode;
+              this.saveSettings(false);
+              await this.notify(this.name, '设置已更新，正在刷新数据...');
+              this.reopenScript();
+            },
           },
           {
             url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/showUsedFlow.png',
             type: 'switch',
             title: '显示已用',
+            desc: '更改后请清除缓存生效',
             val: 'showUsedFlow',
+            desc: '切换后自动刷新数据',
+            onChange: async () => {
+              delete this.settings.dataSource;
+              delete this.settings.telecom_token;
+              delete this.settings.telecom_cityCode;
+              delete this.settings.telecom_provinceCode;
+              this.saveSettings(false);
+              await this.notify(this.name, '设置已更新，正在刷新数据...');
+              this.reopenScript();
+            },
           },
         ],
       });
@@ -1658,21 +1868,37 @@ class Widget extends DmYY {
         title: '',
         menu: [
           {
-            name: 'account',
-            url: 'https://raw.githubusercontent.com/githubdulong/Script/master/Images/boxjs.png',
-            title: '账号设置',
+            name: 'accounts',
+            url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/enableName.png',
+            title: '账户设置',
             type: 'input',
-            onClick: async () => {
-              return this.setAccountConfig();
+            onClick: () => {
+              return this.renderAppView(accountMenus);
             },
           },
           {
-            name: 'basic',
-            url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/basic.png',
-            title: '基础设置',
-            type: 'input',
-            onClick: () => {
-              return this.setWidgetConfig();
+            icon: { name: 'trash', color: '#ff4d4f' },
+            title: '清除缓存',
+            val: 'clearCache',
+            onClick: async () => {
+              const fm = FileManager.local();
+              const cacheDir = fm.joinPath(fm.documentsDirectory(), 'ChinaTelecom_Cache');
+              
+              if (fm.fileExists(cacheDir)) {
+                fm.remove(cacheDir);
+                const alert = new Alert();
+                alert.title = '清除成功';
+                alert.message = '所有账户缓存已清除，脚本将自动刷新。';
+                alert.addAction('确定');
+                await alert.present();
+                this.reopenScript();
+              } else {
+                const alert = new Alert();
+                alert.title = '提示';
+                alert.message = '缓存目录不存在，无需清除。';
+                alert.addAction('确定');
+                await alert.present();
+              }
             },
           },
         ],
@@ -1681,18 +1907,12 @@ class Widget extends DmYY {
         title: '',
         menu: [
           {
-            name: 'clearCache',
-            url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/clear.png',
-            title: '清除缓存',
+            name: 'basic',
+            url: 'https://raw.githubusercontent.com/anker1209/Scriptable/main/icon/basic.png',
+            title: '基础功能',
             type: 'input',
-            onClick: async () => {
-              delete this.settings.dataSource;
-              delete this.settings.telecom_token;
-              delete this.settings.telecom_cityCode;
-              delete this.settings.telecom_provinceCode;
-              this.saveSettings(false);
-              await this.notify(this.name, '缓存已清除，请重新运行小组件');
-              this.reopenScript();
+            onClick: () => {
+              return this.setWidgetConfig();
             },
           },
           {
