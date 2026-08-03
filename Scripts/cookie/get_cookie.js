@@ -24,6 +24,21 @@ for (const headerField in req_headers) {
 console.log("遍历头部对象并打印每个字段和值结束🍓");
 
 try {
+
+  /**
+   * 大蓝树
+   * 打开签到页面获取cookie
+   * @keyword fmz200_dalanshu_authorization
+   */
+  if (req_url.includes("/api/v1/me/checkin/status")) {
+    const authorization = req_headers["authorization"] || req_headers["Authorization"];
+    if (authorization) {
+      $.write(authorization, '#fmz200_dalanshu_authorization');
+      $.notify('大蓝树 签到参数获取成功', '', authorization);
+      console.log('大蓝树 获取到的参数为：' + authorization);
+    }
+  }
+  
   /**
    * 奇瑞汽车App
    * 手机APP进入"我的"页面，即可获取cookie
