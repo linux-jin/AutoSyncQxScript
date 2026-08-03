@@ -33,9 +33,15 @@ try {
   if (req_url.includes("/api/v1/me/checkin/status")) {
     const authorization = req_headers["authorization"] || req_headers["Authorization"];
     if (authorization) {
-      $.write(authorization, '#fmz200_dalanshu_authorization');
-      $.notify('大蓝树 签到参数获取成功', '', authorization);
-      console.log('大蓝树 获取到的参数为：' + authorization);
+      let cache = $.read("#fmz200_dalanshu_authorization") || "";
+      console.log("读取到缓存数据：" + cache);
+      if (authorization !== cache) {
+        $.write(authorization, '#fmz200_dalanshu_authorization');
+        $.notify('大蓝树 签到参数获取成功', '', authorization);
+        console.log('大蓝树 获取到的参数为：' + authorization);
+      } else {
+        console.log("获取到的内容与缓存数据一致，不做任何操作");
+      }
     }
   }
   
