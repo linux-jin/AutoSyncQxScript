@@ -1,9 +1,9 @@
 ## [Adblock Plus 1.1]
-## ! Version: 202611140126
+## ! Version: 202611140226
 ## ! Title: EasyPrivacy
-## ! Last modified: 14 Nov 2026 01:26 UTC
+## ! Last modified: 14 Nov 2026 02:26 UTC
 ## ! Expires: 4 days (update frequency)
-## ! Commit: f44ccd5e26e1cbe550edb12555890bc6cf83977a
+## ! Commit: a68512430cf0299bd0a30102d4e3c32fd7e5cda9
 ## ! *** easylist:template_header.txt ***
 ## ! 
 ## ! Please report any unblocked adverts or problems
@@ -3434,6 +3434,7 @@ DOMAIN-SUFFIX,analytics.adobe.io, reject
 DOMAIN-SUFFIX,analytics.agoda.com, reject
 DOMAIN-SUFFIX,analytics.aimtell.com, reject
 DOMAIN-SUFFIX,analytics.algolia.com, reject
+DOMAIN-SUFFIX,analytics.alvarezrosa.com, reject
 DOMAIN-SUFFIX,analytics.amakings.com, reject
 DOMAIN-SUFFIX,analytics.api.justeattakeaway.com, reject
 DOMAIN-SUFFIX,analytics.apnewsregistry.com, reject
@@ -5827,6 +5828,7 @@ DOMAIN-SUFFIX,c.wort-suche.com, reject
 DOMAIN-SUFFIX,c.xbox.com, reject
 DOMAIN-SUFFIX,cactus.joybuy.com, reject
 DOMAIN-SUFFIX,cdapi.collegedunia.com, reject
+DOMAIN-SUFFIX,cdid.trip.com, reject
 DOMAIN-SUFFIX,cdn.eaec.fpfis.tech.ec.europa.eu, reject
 DOMAIN-SUFFIX,cdp.howtotrade.com, reject
 DOMAIN-SUFFIX,chloro.trip.com, reject
@@ -6002,6 +6004,7 @@ DOMAIN-SUFFIX,fp.measure.office.com, reject
 DOMAIN-SUFFIX,fp.uncensored.com, reject
 DOMAIN-SUFFIX,fpa-cdn.adweek.com, reject
 DOMAIN-SUFFIX,fpa-cdn.arstechnica.com, reject
+DOMAIN-SUFFIX,fpa-events.theintercept.com, reject
 DOMAIN-SUFFIX,fpc.fingerprint.com, reject
 DOMAIN-SUFFIX,fpt.microsoft.com, reject
 DOMAIN-SUFFIX,fresnel-events.vimeocdn.com, reject
@@ -6177,6 +6180,7 @@ DOMAIN-SUFFIX,ol-collector.quillbot.com, reject
 DOMAIN-SUFFIX,op.dragonfru.it, reject
 DOMAIN-SUFFIX,ophan.theguardian.com, reject
 DOMAIN-SUFFIX,optimizely.techtarget.com, reject
+DOMAIN-SUFFIX,otel-gw.booking.com, reject
 DOMAIN-SUFFIX,otel-mobile.doordash.com, reject
 DOMAIN-SUFFIX,p.codio.com, reject
 DOMAIN-SUFFIX,p.controld.com, reject
@@ -6273,6 +6277,7 @@ DOMAIN-SUFFIX,reports.tunein.com, reject
 DOMAIN-SUFFIX,researchlog.dbresearch.com, reject
 DOMAIN-SUFFIX,rfk.biglots.com, reject
 DOMAIN-SUFFIX,ring.staticmoly.me, reject
+DOMAIN-SUFFIX,riskpoc.trip.com, reject
 DOMAIN-SUFFIX,roas-service.store-services-prod.remarkable.com, reject
 DOMAIN-SUFFIX,rps-p2.rockpapershotgun.com, reject
 DOMAIN-SUFFIX,rps-uk.rockpapershotgun.com, reject
@@ -6304,6 +6309,7 @@ DOMAIN-SUFFIX,service.techzine.eu, reject
 DOMAIN-SUFFIX,sherlock-events-sampler.ebay.com, reject
 DOMAIN-SUFFIX,shopmetric.rediff.com, reject
 DOMAIN-SUFFIX,sid.nordstrom.com, reject
+DOMAIN-SUFFIX,sink.gw.booking.com, reject
 DOMAIN-SUFFIX,sjc.cloud.optable.co, reject
 DOMAIN-SUFFIX,slipstream.skyscanner.net, reject
 DOMAIN-SUFFIX,smetrics.couponcabin.com, reject
