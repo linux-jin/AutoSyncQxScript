@@ -1,9 +1,9 @@
 ## [Adblock Plus 1.1]
-## ! Version: 202611130738
+## ! Version: 202611140126
 ## ! Title: EasyPrivacy
-## ! Last modified: 13 Nov 2026 07:38 UTC
+## ! Last modified: 14 Nov 2026 01:26 UTC
 ## ! Expires: 4 days (update frequency)
-## ! Commit: 7733428ccf7d9c59a0162128babd65f643213a34
+## ! Commit: f44ccd5e26e1cbe550edb12555890bc6cf83977a
 ## ! *** easylist:template_header.txt ***
 ## ! 
 ## ! Please report any unblocked adverts or problems
@@ -41,6 +41,7 @@ DOMAIN-SUFFIX,admaxium.com, reject
 DOMAIN-SUFFIX,admediasales.com, reject
 DOMAIN-SUFFIX,admetrics.events, reject
 DOMAIN-SUFFIX,adnext.co, reject
+DOMAIN-SUFFIX,adnz.co, reject
 DOMAIN-SUFFIX,adrsbl.io, reject
 DOMAIN-SUFFIX,adrtx.net, reject
 DOMAIN-SUFFIX,adscore.com, reject
@@ -2533,6 +2534,7 @@ DOMAIN-SUFFIX,robotsrefinery.com, reject
 DOMAIN-SUFFIX,rockagainst.com, reject
 DOMAIN-SUFFIX,rockcarving.com, reject
 DOMAIN-SUFFIX,rocketmonitor.com, reject
+DOMAIN-SUFFIX,rocketserver.net, reject
 DOMAIN-SUFFIX,rockspreading.com, reject
 DOMAIN-SUFFIX,rockstarwriter.com, reject
 DOMAIN-SUFFIX,roguephilosopher.com, reject
@@ -2812,6 +2814,7 @@ DOMAIN-SUFFIX,spaceaffinity.com, reject
 DOMAIN-SUFFIX,spareapp.com, reject
 DOMAIN-SUFFIX,sparkgoal.com, reject
 DOMAIN-SUFFIX,sparklingshelf.com, reject
+DOMAIN-SUFFIX,spasmgame.com, reject
 DOMAIN-SUFFIX,specialreview.net, reject
 DOMAIN-SUFFIX,specialscissors.com, reject
 DOMAIN-SUFFIX,specialtypin.com, reject
@@ -3002,6 +3005,7 @@ DOMAIN-SUFFIX,tastelesstrees.com, reject
 DOMAIN-SUFFIX,tastesnake.com, reject
 DOMAIN-SUFFIX,tawdryson.com, reject
 DOMAIN-SUFFIX,taxisubsea.com, reject
+DOMAIN-SUFFIX,taxiwear.com, reject
 DOMAIN-SUFFIX,tealjewel.com, reject
 DOMAIN-SUFFIX,teamstatus.net, reject
 DOMAIN-SUFFIX,tearfulglass.com, reject
@@ -3020,6 +3024,7 @@ DOMAIN-SUFFIX,teeoffcafe.com, reject
 DOMAIN-SUFFIX,teeshining.com, reject
 DOMAIN-SUFFIX,telephoneapparatus.com, reject
 DOMAIN-SUFFIX,tempertrick.com, reject
+DOMAIN-SUFFIX,tempowraps.com, reject
 DOMAIN-SUFFIX,temptteam.com, reject
 DOMAIN-SUFFIX,tendertest.com, reject
 DOMAIN-SUFFIX,tenhourweek.com, reject
@@ -3326,6 +3331,7 @@ DOMAIN-SUFFIX,wrongwound.com, reject
 DOMAIN-SUFFIX,wtaccesscontrol.com, reject
 DOMAIN-SUFFIX,yachtloft.com, reject
 DOMAIN-SUFFIX,yellowscissors.com, reject
+DOMAIN-SUFFIX,yetiminis.com, reject
 DOMAIN-SUFFIX,yieldingwoman.com, reject
 DOMAIN-SUFFIX,youcandrawanything.com, reject
 DOMAIN-SUFFIX,yourgiftedbaby.com, reject
@@ -3683,6 +3689,7 @@ DOMAIN-SUFFIX,cdn.prod.euid.eu, reject
 DOMAIN-SUFFIX,cdn.ravm.tv, reject
 DOMAIN-SUFFIX,cdn.seonintelligence.com, reject
 DOMAIN-SUFFIX,cdn.usefathom.com, reject
+DOMAIN-SUFFIX,cdn.visits.dqapis.com, reject
 DOMAIN-SUFFIX,cdns.brsrvr.com, reject
 DOMAIN-SUFFIX,cf-pixelfront-analytics.widencdn.net, reject
 DOMAIN-SUFFIX,cf.api.instant.one, reject
@@ -4150,6 +4157,7 @@ DOMAIN-SUFFIX,native-ads-events-api.c4s-rd.services, reject
 DOMAIN-SUFFIX,native-ads-events-api2.c4s-rd.services, reject
 DOMAIN-SUFFIX,neocounter.neoworx-blog-tools.net, reject
 DOMAIN-SUFFIX,netlify-rum.netlify.app, reject
+DOMAIN-SUFFIX,nexus.firecrown.com, reject
 DOMAIN-SUFFIX,ninja.onap.io, reject
 DOMAIN-SUFFIX,nitrous-analytics.s3.amazonaws.com, reject
 DOMAIN-SUFFIX,noa.yahoo.com, reject
@@ -4345,6 +4353,7 @@ DOMAIN-SUFFIX,rum.perfops.net, reject
 DOMAIN-SUFFIX,rum.uptime.com, reject
 DOMAIN-SUFFIX,rumstat.cdnvideo.ru, reject
 DOMAIN-SUFFIX,rw.marchex.io, reject
+DOMAIN-SUFFIX,rybbit-analytics.livecounts.io, reject
 DOMAIN-SUFFIX,rybbit.sg-app.com, reject
 DOMAIN-SUFFIX,s.autopilotapp.com, reject
 DOMAIN-SUFFIX,s.axon.ai, reject
@@ -4541,6 +4550,7 @@ DOMAIN-SUFFIX,tag.aticdn.net, reject
 DOMAIN-SUFFIX,tag.atom.gamedistribution.com, reject
 DOMAIN-SUFFIX,tag.aumago.com, reject
 DOMAIN-SUFFIX,tag.brandcdn.com, reject
+DOMAIN-SUFFIX,tag.decentriq.com, reject
 DOMAIN-SUFFIX,tag.digops.sincro.io, reject
 DOMAIN-SUFFIX,tag.elevaate.io, reject
 DOMAIN-SUFFIX,tag.flagship.io, reject

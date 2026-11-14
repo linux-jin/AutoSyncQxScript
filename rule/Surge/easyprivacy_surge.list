@@ -1,9 +1,9 @@
 ## [Adblock Plus 1.1]
-## ! Version: 202611130738
+## ! Version: 202611140126
 ## ! Title: EasyPrivacy
-## ! Last modified: 13 Nov 2026 07:38 UTC
+## ! Last modified: 14 Nov 2026 01:26 UTC
 ## ! Expires: 4 days (update frequency)
-## ! Commit: 7733428ccf7d9c59a0162128babd65f643213a34
+## ! Commit: f44ccd5e26e1cbe550edb12555890bc6cf83977a
 ## ! *** easylist:template_header.txt ***
 ## ! 
 ## ! Please report any unblocked adverts or problems
@@ -41,6 +41,7 @@ DOMAIN-SUFFIX,admaxium.com
 DOMAIN-SUFFIX,admediasales.com
 DOMAIN-SUFFIX,admetrics.events
 DOMAIN-SUFFIX,adnext.co
+DOMAIN-SUFFIX,adnz.co
 DOMAIN-SUFFIX,adrsbl.io
 DOMAIN-SUFFIX,adrtx.net
 DOMAIN-SUFFIX,adscore.com
@@ -2533,6 +2534,7 @@ DOMAIN-SUFFIX,robotsrefinery.com
 DOMAIN-SUFFIX,rockagainst.com
 DOMAIN-SUFFIX,rockcarving.com
 DOMAIN-SUFFIX,rocketmonitor.com
+DOMAIN-SUFFIX,rocketserver.net
 DOMAIN-SUFFIX,rockspreading.com
 DOMAIN-SUFFIX,rockstarwriter.com
 DOMAIN-SUFFIX,roguephilosopher.com
@@ -2812,6 +2814,7 @@ DOMAIN-SUFFIX,spaceaffinity.com
 DOMAIN-SUFFIX,spareapp.com
 DOMAIN-SUFFIX,sparkgoal.com
 DOMAIN-SUFFIX,sparklingshelf.com
+DOMAIN-SUFFIX,spasmgame.com
 DOMAIN-SUFFIX,specialreview.net
 DOMAIN-SUFFIX,specialscissors.com
 DOMAIN-SUFFIX,specialtypin.com
@@ -3002,6 +3005,7 @@ DOMAIN-SUFFIX,tastelesstrees.com
 DOMAIN-SUFFIX,tastesnake.com
 DOMAIN-SUFFIX,tawdryson.com
 DOMAIN-SUFFIX,taxisubsea.com
+DOMAIN-SUFFIX,taxiwear.com
 DOMAIN-SUFFIX,tealjewel.com
 DOMAIN-SUFFIX,teamstatus.net
 DOMAIN-SUFFIX,tearfulglass.com
@@ -3020,6 +3024,7 @@ DOMAIN-SUFFIX,teeoffcafe.com
 DOMAIN-SUFFIX,teeshining.com
 DOMAIN-SUFFIX,telephoneapparatus.com
 DOMAIN-SUFFIX,tempertrick.com
+DOMAIN-SUFFIX,tempowraps.com
 DOMAIN-SUFFIX,temptteam.com
 DOMAIN-SUFFIX,tendertest.com
 DOMAIN-SUFFIX,tenhourweek.com
@@ -3326,6 +3331,7 @@ DOMAIN-SUFFIX,wrongwound.com
 DOMAIN-SUFFIX,wtaccesscontrol.com
 DOMAIN-SUFFIX,yachtloft.com
 DOMAIN-SUFFIX,yellowscissors.com
+DOMAIN-SUFFIX,yetiminis.com
 DOMAIN-SUFFIX,yieldingwoman.com
 DOMAIN-SUFFIX,youcandrawanything.com
 DOMAIN-SUFFIX,yourgiftedbaby.com
@@ -3683,6 +3689,7 @@ DOMAIN-SUFFIX,cdn.prod.euid.eu
 DOMAIN-SUFFIX,cdn.ravm.tv
 DOMAIN-SUFFIX,cdn.seonintelligence.com
 DOMAIN-SUFFIX,cdn.usefathom.com
+DOMAIN-SUFFIX,cdn.visits.dqapis.com
 DOMAIN-SUFFIX,cdns.brsrvr.com
 DOMAIN-SUFFIX,cf-pixelfront-analytics.widencdn.net
 DOMAIN-SUFFIX,cf.api.instant.one
@@ -4150,6 +4157,7 @@ DOMAIN-SUFFIX,native-ads-events-api.c4s-rd.services
 DOMAIN-SUFFIX,native-ads-events-api2.c4s-rd.services
 DOMAIN-SUFFIX,neocounter.neoworx-blog-tools.net
 DOMAIN-SUFFIX,netlify-rum.netlify.app
+DOMAIN-SUFFIX,nexus.firecrown.com
 DOMAIN-SUFFIX,ninja.onap.io
 DOMAIN-SUFFIX,nitrous-analytics.s3.amazonaws.com
 DOMAIN-SUFFIX,noa.yahoo.com
@@ -4345,6 +4353,7 @@ DOMAIN-SUFFIX,rum.perfops.net
 DOMAIN-SUFFIX,rum.uptime.com
 DOMAIN-SUFFIX,rumstat.cdnvideo.ru
 DOMAIN-SUFFIX,rw.marchex.io
+DOMAIN-SUFFIX,rybbit-analytics.livecounts.io
 DOMAIN-SUFFIX,rybbit.sg-app.com
 DOMAIN-SUFFIX,s.autopilotapp.com
 DOMAIN-SUFFIX,s.axon.ai
@@ -4541,6 +4550,7 @@ DOMAIN-SUFFIX,tag.aticdn.net
 DOMAIN-SUFFIX,tag.atom.gamedistribution.com
 DOMAIN-SUFFIX,tag.aumago.com
 DOMAIN-SUFFIX,tag.brandcdn.com
+DOMAIN-SUFFIX,tag.decentriq.com
 DOMAIN-SUFFIX,tag.digops.sincro.io
 DOMAIN-SUFFIX,tag.elevaate.io
 DOMAIN-SUFFIX,tag.flagship.io

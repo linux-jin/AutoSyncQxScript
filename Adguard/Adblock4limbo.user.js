@@ -380,7 +380,7 @@ var adsMax = {
         /* @media (min-width:640px){.sm\\:hidden{margin:6px 0 0;padding:0;display:flex !important}} */
         missav: 'div.lg\\:hidden,div.space-y-5 > div, ul.mb-4 > li > a {display:none !important;pointer-events:none !important}body{overflow-x:hidden}', //  MissAVX
         javtiful: "button[data-front-share-toggle],front-home-premium-alert,a[href*='rdx.jav.si'],a[href*='r.trwl1.com'],.front-watch-text-feature,.front-feature-placement-close {display:none !important; pointer-events: none !important;}",
-        kanav: '@media (max-width: 768px) { .m-footer { position: fixed; bottom: 0; height: 50px; max-width: 1024px; width: 100%; background: #000 !important; z-index: 10; display: none !important; } } .home-qf > div[class*="img-qf"] {display:none !important; pointer-events: none !important;} ',
+        kanav: '@media (max-width: 768px) { .m-footer { position: fixed; bottom: 0; height: 50px; max-width: 1024px; width: 100%; background: #000 !important; z-index: 10; display: none !important; } } .video-boxad,.home-qf > div[class*="img-qf"] {display:none !important; pointer-events: none !important;} ',
         bigirl: 'div#container + div, h4.adblock_title,div.adblock_subtitle,[class^=\'adblock\'],div[class^=\'ad_\'], .toppage_av {display:none !important; pointer-events: none !important;}', // https://bi-girl.net/
         marketcap: '.ad-tr {display:none !important; pointer-events: none !important;}', // https://8marketcap.com/
         opgg: ".AdSense,  div[data-ad], tr.ad, #banner-container, section[class*='md:hidden'] {display:none !important; pointer-events: none !important;}",
