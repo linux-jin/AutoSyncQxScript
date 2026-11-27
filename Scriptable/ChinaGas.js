@@ -3,7 +3,7 @@
 // icon-color: yellow; icon-glyph: fire;
 /**
  * 组件名称: 中燃在线 (China Gas)
- * 版本号: v2.8.1
+ * 版本号: v2.8.2
  * 依赖框架: DmYY
  * 使用说明: 根据 UI 账户设置教程
  * 其他说明: UI 套用请说明来源，其他地区修改接口即可
@@ -13,7 +13,7 @@ if (typeof require === 'undefined') require = importModule;
 const { DmYY, Runing } = require('./DmYY');
 
 class Widget extends DmYY {
-  version = '2.8.1';
+  version = '2.8.2';
 
   SCALE = 1;
   gasData = null;
@@ -101,7 +101,7 @@ class Widget extends DmYY {
 
     const uiScale = parseFloat(this.settings.uiScale);
     this.SCALE = this.getWidgetScaleFactor() * (isFinite(uiScale) && uiScale > 0 ? uiScale : 1);
-    await this.fetchGasInfo(false);
+    await this.fetchGasInfo(this.isRefreshAction());
   }
 
   getWidgetScaleFactor() {
@@ -220,6 +220,14 @@ class Widget extends DmYY {
     const light = (this.settings && this.settings.lightBgColor) || '#FFFFFF';
     const dark = (this.settings && this.settings.darkBgColor) || '#000000';
     return Color.dynamic(new Color(light), new Color(dark));
+  }
+
+  isRefreshAction() {
+    try {
+      return !!(args.widgetAction && args.widgetAction.id === 'refresh');
+    } catch (_) {
+      return false;
+    }
   }
 
   async fetchGasInfo(force = false) {
@@ -1009,6 +1017,7 @@ class Widget extends DmYY {
 
     const fRow2 = footerCard.addStack();
     fRow2.centerAlignContent();
+    try { fRow2.setAction('刷新', { id: 'refresh' }); } catch (_) {}
     const idIcon = SFSymbol.named('creditcard');
     const idImg = fRow2.addImage(idIcon.image);
     idImg.imageSize = new Size(11 * this.SCALE, 11 * this.SCALE);
@@ -1143,6 +1152,7 @@ class Widget extends DmYY {
 
     const rTop = right.addStack();
     rTop.centerAlignContent();
+    try { rTop.setAction('刷新', { id: 'refresh' }); } catch (_) {}
     const syncBox = rTop.addStack();
     syncBox.size = new Size(13 * this.SCALE, 13 * this.SCALE);
     syncBox.centerAlignContent();
@@ -1246,6 +1256,7 @@ class Widget extends DmYY {
     tagBadge.backgroundColor = this.getCardBgColor();
     tagBadge.cornerRadius = 6 * this.SCALE;
     tagBadge.setPadding(3 * this.SCALE, 8 * this.SCALE, 3 * this.SCALE, 8 * this.SCALE);
+    try { tagBadge.setAction('刷新', { id: 'refresh' }); } catch (_) {}
 
     if (!this.isOffline) {
       const syncSym = SFSymbol.named('arrow.triangle.2.circlepath');
